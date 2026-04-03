@@ -1,0 +1,235 @@
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+#app{display:flex;height:520px;font-family:var(--font-sans);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;background:var(--color-background-primary)}
+
+.sidebar{width:220px;flex-shrink:0;background:var(--color-background-secondary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;overflow:hidden}
+.sb-top{padding:14px 14px 12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.brand{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.brand-ico{width:28px;height:28px;border-radius:6px;background:#5a8a6a;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.brand-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.brand-sub{font-size:10px;color:var(--color-text-secondary)}
+.new-btn{width:100%;padding:7px 10px;background:#5a8a6a;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:var(--font-sans)}
+.new-btn:hover{background:#4a7a5a}
+
+.sb-section{padding:10px 14px 4px}
+.sb-lbl{font-size:9px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px}
+.sb-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:var(--color-text-secondary);font-size:12px;transition:background .12s;user-select:none}
+.sb-item:hover{background:var(--color-background-primary)}
+.sb-item .ic{font-size:13px;width:16px;text-align:center}
+
+.mood-area{padding:10px 14px 14px;border-top:0.5px solid var(--color-border-tertiary);margin-top:auto}
+.mood-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.mood-chip{padding:6px 2px;border:0.5px solid var(--color-border-tertiary);border-radius:6px;background:var(--color-background-primary);font-size:15px;cursor:pointer;text-align:center;line-height:1;transition:all .12s;user-select:none}
+.mood-chip:hover{border-color:#5a8a6a;background:#e8f2ec}
+.mood-chip span{display:block;font-size:8px;color:var(--color-text-tertiary);margin-top:2px}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{padding:11px 16px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.topbar-sub{font-size:10px;color:var(--color-text-secondary)}
+.status{display:flex;align-items:center;gap:5px;font-size:11px;color:#5a8a6a;background:#e8f2ec;border:0.5px solid #c5dece;padding:3px 9px;border-radius:20px}
+.sdot{width:5px;height:5px;border-radius:50%;background:#5a8a6a;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+.chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.chat::-webkit-scrollbar{width:3px}
+.chat::-webkit-scrollbar-thumb{background:var(--color-border-tertiary);border-radius:2px}
+
+.welcome{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;text-align:center;max-width:360px;align-self:center}
+.welcome-em{font-size:28px;margin-bottom:8px}
+.welcome h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:5px}
+.welcome p{font-size:11.5px;color:var(--color-text-secondary);line-height:1.6}
+.qps{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:10px}
+.qp{padding:5px 10px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:20px;font-size:11px;color:var(--color-text-secondary);cursor:pointer;transition:all .12s;font-family:var(--font-sans);user-select:none}
+.qp:hover{border-color:#5a8a6a;color:#5a8a6a;background:#e8f2ec}
+
+.msg-row{display:flex;gap:8px;animation:up .3s ease forwards;opacity:0}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg-row.user{flex-direction:row-reverse}
+.av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:2px}
+.av.ai{background:#5a8a6a;color:#fff}
+.av.user{background:#eaf0f7;border:0.5px solid #c5d8ec;font-size:11px}
+.msg-inner{max-width:75%;display:flex;flex-direction:column;gap:3px}
+.msg-row.user .msg-inner{align-items:flex-end}
+.sndr{font-size:10px;color:var(--color-text-tertiary);font-weight:500}
+.bbl{padding:9px 12px;border-radius:12px;font-size:12.5px;line-height:1.65}
+.bbl.ai{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-top-left-radius:3px;color:var(--color-text-primary)}
+.bbl.user{background:#e8f2ec;border:0.5px solid #c5dece;border-top-right-radius:3px;color:#2a5a3a}
+
+.typing-row{display:flex;gap:8px;align-items:flex-start}
+.typing-bbl{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;border-top-left-radius:3px;padding:10px 14px;display:flex;gap:4px;align-items:center}
+.tdot{width:6px;height:6px;border-radius:50%;background:var(--color-text-tertiary);animation:td 1.2s ease-in-out infinite}
+.tdot:nth-child(2){animation-delay:.16s}.tdot:nth-child(3){animation-delay:.32s}
+@keyframes td{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}
+
+.input-zone{padding:10px 12px 12px;border-top:0.5px solid var(--color-border-tertiary);flex-shrink:0}
+.disc{font-size:10px;color:var(--color-text-tertiary);text-align:center;margin-bottom:7px}
+.disc strong{color:#c9856a}
+.irow{display:flex;gap:8px;align-items:flex-end}
+.ibox{flex:1;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:8px 10px;transition:border-color .15s}
+.ibox:focus-within{border-color:#5a8a6a}
+textarea#inp{width:100%;background:transparent;border:none;outline:none;font-family:var(--font-sans);font-size:12.5px;color:var(--color-text-primary);resize:none;line-height:1.5;max-height:80px}
+textarea#inp::placeholder{color:var(--color-text-tertiary)}
+.sbtn{width:34px;height:34px;flex-shrink:0;background:#5a8a6a;border:none;border-radius:8px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .1s}
+.sbtn:hover{background:#4a7a5a}.sbtn:active{transform:scale(.95)}.sbtn:disabled{background:#c0d8c8;cursor:not-allowed}
+.sbtn svg{width:14px;height:14px}
+</style>
+
+<div id="app">
+<aside class="sidebar">
+  <div class="sb-top">
+    <div class="brand">
+      <div class="brand-ico">🌿</div>
+      <div><div class="brand-name">MindEase</div><div class="brand-sub">Mental Health AI</div></div>
+    </div>
+    <button class="new-btn" onclick="newChat()">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      สนทนาใหม่
+    </button>
+  </div>
+  <div class="sb-section">
+    <div class="sb-lbl">เครื่องมือ</div>
+    <div class="sb-item" onclick="sendQ('สอนหายใจคลายเครียดให้หน่อย')"><span class="ic">🫁</span>หายใจคลายเครียด</div>
+    <div class="sb-item" onclick="sendQ('ช่วย Grounding exercise หน่อย')"><span class="ic">🌱</span>Grounding</div>
+    <div class="sb-item" onclick="sendQ('ทำ Mindfulness สั้นๆ ให้หน่อย')"><span class="ic">🧘</span>Mindfulness</div>
+    <div class="sb-item" onclick="sendQ('ให้คำพูดให้กำลังใจวันนี้หน่อย')"><span class="ic">✨</span>กำลังใจ</div>
+    <div class="sb-item" onclick="sendQ('เคล็ดลับนอนหลับให้ดีขึ้น')"><span class="ic">😴</span>เคล็ดลับการนอน</div>
+  </div>
+  <div class="mood-area">
+    <div class="sb-lbl" style="margin-bottom:8px">วันนี้รู้สึกอย่างไร?</div>
+    <div class="mood-grid">
+      <div class="mood-chip" onclick="sendQ('วันนี้รู้สึกดีและมีความสุข')">😊<span>ดีใจ</span></div>
+      <div class="mood-chip" onclick="sendQ('รู้สึกเครียดและวิตกกังวล')">😰<span>เครียด</span></div>
+      <div class="mood-chip" onclick="sendQ('รู้สึกเศร้าและหดหู่')">😢<span>เศร้า</span></div>
+      <div class="mood-chip" onclick="sendQ('รู้สึกโกรธและหงุดหงิด')">😤<span>โกรธ</span></div>
+      <div class="mood-chip" onclick="sendQ('รู้สึกเหนื่อยและหมดแรง')">😴<span>เหนื่อย</span></div>
+      <div class="mood-chip" onclick="sendQ('รู้สึกสงบและผ่อนคลาย')">😌<span>สงบ</span></div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div><div class="topbar-title">Sage — AI Companion</div><div class="topbar-sub">ฟังโดยไม่ตัดสิน · หลายภาษา</div></div>
+    <div class="status"><div class="sdot"></div>พร้อมคุย</div>
+  </div>
+  <div class="chat" id="chat">
+    <div class="welcome" id="welcome">
+      <div class="welcome-em">🌿</div>
+      <h3>ยินดีต้อนรับสู่ MindEase</h3>
+      <p>ฉันชื่อ Sage พื้นที่นี้ปลอดภัย<br>บอกสิ่งที่อยู่ในใจได้เลย</p>
+      <div class="qps">
+        <div class="qp" onclick="sendQ('ช่วงนี้รู้สึกเครียดมาก')">😟 เครียด</div>
+        <div class="qp" onclick="sendQ('ฉันกังวลเรื่องหลายอย่าง')">😰 กังวล</div>
+        <div class="qp" onclick="sendQ('แค่อยากมีคนคุยด้วย')">💬 อยากคุย</div>
+        <div class="qp" onclick="sendQ('ช่วยให้ฉันผ่อนคลายหน่อย')">🧘 ผ่อนคลาย</div>
+        <div class="qp" onclick="sendQ('I feel really anxious today')">🌐 English</div>
+      </div>
+    </div>
+  </div>
+  <div class="input-zone">
+    <div class="disc">🔒 ส่วนตัว · ไม่ใช่ทดแทนผู้เชี่ยวชาญ · <strong>วิกฤต? โทร 1323</strong></div>
+    <div class="irow">
+      <div class="ibox">
+        <textarea id="inp" rows="1" placeholder="บอกสิ่งที่อยู่ในใจ… (ไทย, English, หรือภาษาอื่น)" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
+      </div>
+      <button class="sbtn" id="sbtn" onclick="send()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</main>
+</div>
+
+<script>
+const SYSTEM=`You are Sage, a warm empathetic mental health companion AI for MindEase app.
+Rules:
+1. Detect the user's language and ALWAYS reply in the SAME language (Thai→Thai, English→English).
+2. If the message is in a non-English, non-Thai language: show 🌐 [Lang]: [English translation] then ――― then respond in English.
+3. Be warm, calm, non-judgmental. Never clinical.
+4. Ask one thoughtful follow-up question per response.
+5. Offer practical coping tips (breathing, grounding, mindfulness) when helpful.
+6. If crisis/self-harm themes arise, gently suggest Thai hotline 1323.
+7. Keep responses to 2-3 short paragraphs max.`;
+
+let history=[];
+let busy=false;
+
+function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px'}
+function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}}
+function sendQ(t){document.getElementById('inp').value=t;send()}
+function removeWelcome(){const w=document.getElementById('welcome');if(w)w.remove()}
+
+function newChat(){
+  history=[];
+  document.getElementById('chat').innerHTML=`<div class="welcome" id="welcome">
+    <div class="welcome-em">🌿</div>
+    <h3>ยินดีต้อนรับสู่ MindEase</h3>
+    <p>ฉันชื่อ Sage พื้นที่นี้ปลอดภัย<br>บอกสิ่งที่อยู่ในใจได้เลย</p>
+    <div class="qps">
+      <div class="qp" onclick="sendQ('ช่วงนี้รู้สึกเครียดมาก')">😟 เครียด</div>
+      <div class="qp" onclick="sendQ('ฉันกังวลเรื่องหลายอย่าง')">😰 กังวล</div>
+      <div class="qp" onclick="sendQ('แค่อยากมีคนคุยด้วย')">💬 อยากคุย</div>
+      <div class="qp" onclick="sendQ('ช่วยให้ฉันผ่อนคลายหน่อย')">🧘 ผ่อนคลาย</div>
+      <div class="qp" onclick="sendQ('I feel really anxious today')">🌐 English</div>
+    </div>
+  </div>`;
+}
+
+function addBubble(role,text){
+  removeWelcome();
+  const chat=document.getElementById('chat');
+  const row=document.createElement('div');
+  row.className='msg-row '+role;
+  const avHTML=role==='ai'
+    ?`<div class="av ai">🌿</div>`
+    :`<div class="av user">🙂</div>`;
+  const name=role==='ai'?'Sage':'คุณ';
+  const fmt=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/―――/g,'<hr style="border:none;border-top:0.5px solid var(--color-border-tertiary);margin:6px 0">').replace(/\n/g,'<br>');
+  row.innerHTML=`${avHTML}<div class="msg-inner"><div class="sndr">${name}</div><div class="bbl ${role}">${fmt}</div></div>`;
+  chat.appendChild(row);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function showTyping(){
+  removeWelcome();
+  const chat=document.getElementById('chat');
+  const row=document.createElement('div');
+  row.className='typing-row';row.id='typing';
+  row.innerHTML=`<div class="av ai" style="width:26px;height:26px;border-radius:50%;background:#5a8a6a;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px">🌿</div><div class="typing-bbl"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
+  chat.appendChild(row);
+  chat.scrollTop=chat.scrollHeight;
+}
+function hideTyping(){const el=document.getElementById('typing');if(el)el.remove()}
+
+async function send(){
+  if(busy)return;
+  const inp=document.getElementById('inp');
+  const text=inp.value.trim();
+  if(!text)return;
+  inp.value='';inp.style.height='auto';
+  busy=true;
+  document.getElementById('sbtn').disabled=true;
+  addBubble('user',text);
+  history.push({role:'user',content:text});
+  showTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:history})
+    });
+    const data=await res.json();
+    hideTyping();
+    const reply=data.content?.[0]?.text||'ฉันอยู่ตรงนี้นะ ลองเล่าให้ฟังอีกครั้งได้เลย 💚';
+    history.push({role:'assistant',content:reply});
+    addBubble('ai',reply);
+  }catch(e){
+    hideTyping();
+    addBubble('ai','🌿 เกิดปัญหาชั่วคราว ลองส่งอีกครั้งนะ 💚');
+  }
+  busy=false;
+  document.getElementById('sbtn').disabled=false;
+  document.getElementById('inp').focus();
+}
+</script>
